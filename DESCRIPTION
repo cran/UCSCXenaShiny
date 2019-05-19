@@ -1,6 +1,6 @@
 Package: UCSCXenaShiny
 Title: A Shiny App for UCSC Xena Database
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     c(
     person("Shixiang", "Wang", email = "w_shixiang@163.com",
@@ -28,9 +28,9 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Suggests: covr
+Suggests: covr, testthat (>= 2.1.0)
 NeedsCompilation: no
-Packaged: 2019-05-08 01:55:17 UTC; wsx
+Packaged: 2019-05-19 13:42:48 UTC; wsx
 Author: Shixiang Wang [aut, cre] (<https://orcid.org/0000-0001-9855-7357>),
   Yi Xiong [aut] (<https://orcid.org/0000-0002-4370-9824>),
   Longfei Zhao [aut] (<https://orcid.org/0000-0002-6277-0137>),
@@ -39,4 +39,4 @@ Author: Shixiang Wang [aut, cre] (<https://orcid.org/0000-0001-9855-7357>),
   Fei Zhao [aut]
 Maintainer: Shixiang Wang <w_shixiang@163.com>
 Repository: CRAN
-Date/Publication: 2019-05-09 08:30:22 UTC
+Date/Publication: 2019-05-19 14:10:03 UTC
