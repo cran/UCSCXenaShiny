@@ -42,7 +42,20 @@ vis_toil_gene <- function(data, x = "primary_site",
 #'
 vis_toil_TvsN <- function(Gene = "TP53", Mode = "Boxplot", Show.P.value = TRUE, Show.P.label = TRUE, Method = "wilcox.test", values = c("#DF2020", "#DDDF21")) {
   data("tcga_gtex_sampleinfo", package = "UCSCXenaShiny", envir = environment())
-  t1 <- get_pancan_value(Gene, dataset = "TcgaTargetGtex_rsem_isoform_tpm", host = "toilHub")
+  dir.create(file.path(tempdir(), "UCSCXenaShiny"), recursive = TRUE, showWarnings = FALSE)
+  tmpfile <- file.path(tempdir(), "UCSCXenaShiny", "toil_TvsN.rds")
+  if (file.exists(tmpfile)) {
+    t1 <- readRDS(tmpfile)
+    if (attr(t1, "gene") != Gene) {
+      t1 <- get_pancan_value(Gene, dataset = "TcgaTargetGtex_rsem_isoform_tpm", host = "toilHub")
+      attr(t1, "gene") <- Gene 
+      saveRDS(t1, file = tmpfile)
+    }
+  } else {
+    t1 <- get_pancan_value(Gene, dataset = "TcgaTargetGtex_rsem_isoform_tpm", host = "toilHub")
+    attr(t1, "gene") <- Gene 
+    saveRDS(t1, file = tmpfile)
+  }
   tcga_gtex <- tcga_gtex %>% dplyr::distinct(sample, .keep_all = TRUE)
   t2 <- t1 %>%
     as.data.frame() %>%
@@ -100,23 +113,23 @@ vis_toil_TvsN <- function(Gene = "TP53", Mode = "Boxplot", Show.P.value = TRUE, 
     print(p)
   }
   if (Mode == "Violinplot") {
-    p <- ggplot2::ggplot(tcga_gtex_withNormal, aes(x = tissue, y = tpm, fill = type2)) + 
+    p <- ggplot2::ggplot(tcga_gtex_withNormal, aes(x = tissue, y = tpm, fill = type2)) +
       geom_split_violin(
-        draw_quantiles = c(0.25, 0.5, 0.75), 
-        trim = T, 
+        draw_quantiles = c(0.25, 0.5, 0.75),
+        trim = T,
         linetype = "solid",
         color = "black",
         size = 0.2,
         na.rm = T,
         position = "identity"
-      ) + 
+      ) +
       ggplot2::ylab(paste0(Gene, " expression (TPM)")) + xlab("") +
       ggplot2::scale_fill_manual(values = values) +
       ggplot2::theme_set(theme_set(theme_classic(base_size = 20))) +
       ggplot2::theme(axis.text.x = element_text(angle = 45, hjust = .5, vjust = .5)) +
       ggplot2::guides(fill = guide_legend(title = NULL)) +
       ggplot2::theme(
-        legend.background = element_blank(), 
+        legend.background = element_blank(),
         legend.position = c(0, 0), legend.justification = c(0, 0)
       )
 
