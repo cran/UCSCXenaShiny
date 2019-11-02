@@ -1,10 +1,10 @@
 Package: UCSCXenaShiny
 Title: A Shiny App for UCSC Xena Database
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: 
     c(person(given = "Shixiang",
              family = "Wang",
-             role = c("aut"),
+             role = c("aut", "cre"),
              email = "w_shixiang@163.com",
              comment = c(ORCID = "0000-0001-9855-7357")),
       person(given = "Yi",
@@ -19,7 +19,7 @@ Authors@R:
              comment = c(ORCID = "0000-0002-6277-0137")),
       person(given = "Kai",
              family = "Gu",
-             role = c("aut", "cre"),
+             role = c("aut"),
              email = "gukai1212@163.com",
              comment = c(ORCID = "0000-0002-0177-0774")),
       person(given = "Yin",
@@ -30,7 +30,7 @@ Authors@R:
              family = "Zhao",
              role = "aut",
              email = "zhaofei415@mails.ucas.edu.cn"))
-Maintainer: Kai Gu <gukai1212@163.com>
+Maintainer: Shixiang Wang <w_shixiang@163.com>
 Description: Provides a web app for downloading, analyzing and
     visualizing datasets from UCSC Xena (<http://xena.ucsc.edu/>), which is a collection of
     UCSC-hosted public databases such as TCGA, ICGC, TARGET, GTEx, CCLE,
@@ -49,12 +49,12 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2019-08-22 13:38:47 UTC; anlan
-Author: Shixiang Wang [aut] (<https://orcid.org/0000-0001-9855-7357>),
+Packaged: 2019-11-02 07:26:45 UTC; wsx
+Author: Shixiang Wang [aut, cre] (<https://orcid.org/0000-0001-9855-7357>),
   Yi Xiong [aut] (<https://orcid.org/0000-0002-4370-9824>),
   Longfei Zhao [aut] (<https://orcid.org/0000-0002-6277-0137>),
-  Kai Gu [aut, cre] (<https://orcid.org/0000-0002-0177-0774>),
+  Kai Gu [aut] (<https://orcid.org/0000-0002-0177-0774>),
   Yin Li [aut],
   Fei Zhao [aut]
 Repository: CRAN
-Date/Publication: 2019-08-23 15:30:08 UTC
+Date/Publication: 2019-11-02 21:50:02 UTC
