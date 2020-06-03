@@ -3,8 +3,7 @@
 \docType{package}
 \name{UCSCXenaShiny}
 \alias{UCSCXenaShiny}
-\alias{UCSCXenaShiny-package}
 \title{Xena Shiny App}
 \description{
-Xena Shiny App
+A Shiny App for UCSC Xena Data Hubs.
 }
