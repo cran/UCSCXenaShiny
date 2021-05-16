@@ -2,39 +2,54 @@
 % Please edit documentation in R/vis_pancan_value.R
 \name{vis_toil_TvsN}
 \alias{vis_toil_TvsN}
-\title{Visualize single gene expression from toil data hub}
+\title{Visualize Pan-cancer TPM (tumor (TCGA) vs Normal (TCGA & GTEx))}
 \usage{
 vis_toil_TvsN(
   Gene = "TP53",
-  Mode = "Boxplot",
+  Mode = c("Boxplot", "Violinplot"),
+  data_type = "mRNA",
   Show.P.value = TRUE,
   Show.P.label = TRUE,
-  Method = "wilcox.test",
-  values = c("#DF2020", "#DDDF21")
+  Method = c("wilcox.test", "t.test"),
+  values = c("#DF2020", "#DDDF21"),
+  TCGA.only = FALSE,
+  draw_quantiles = c(0.25, 0.5, 0.75),
+  trim = TRUE
 )
 }
 \arguments{
-\item{Gene}{Gene symbal for comparision}
+\item{Gene}{a molecular identifier (e.g., "TP53") or a formula specifying
+genomic signature (\code{"TP53 + 2 * KRAS - 1.3 * PTEN"}).}
 
-\item{Mode}{Boxplot or Violinplot to represent data}
+\item{Mode}{"Boxplot" or "Violinplot" to represent data}
 
-\item{Show.P.value}{TRUE or FALSE whether to count P value}
+\item{data_type}{choose gene profile type,
+including "mRNA", "transcript", "protein", "mutation", "cnv" (-2, -1, 0, 1, 2),
+"cnv_gistic2", "methylation", "miRNA".}
 
-\item{Show.P.label}{TRUE or FALSE present p value with number or label '* ** *** ****'}
+\item{Show.P.value}{\code{TRUE} or \code{FALSE} whether to count P value}
+
+\item{Show.P.label}{\code{TRUE} or \code{FALSE} present p value with number or label \code{*}, \verb{**}, \verb{***} and \verb{****}}
 
 \item{Method}{default method is wilcox.test}
 
 \item{values}{the color to fill tumor or normal}
+
+\item{TCGA.only}{include samples only from TCGA dataset}
+
+\item{draw_quantiles}{draw quantiles for violinplot}
+
+\item{trim}{whether trim the violin}
 }
 \value{
 a \code{ggplot} object
 }
 \description{
-Visualize single gene expression from toil data hub
+Visualize Pan-cancer TPM (tumor (TCGA) vs Normal (TCGA & GTEx))
 }
 \examples{
-\donttest{
-p <- vis_toil_TvsN(Gene = "TP53", Mode = "Violinplot", Show.P.value = F, Show.P.label = F)
-p <- vis_toil_TvsN(Gene = "TP53", Mode = "Boxplot", Show.P.value = F, Show.P.label = F)
+\dontrun{
+p <- vis_toil_TvsN(Gene = "TP53", Mode = "Violinplot", Show.P.value = FALSE, Show.P.label = FALSE)
+p <- vis_toil_TvsN(Gene = "TP53", Mode = "Boxplot", Show.P.value = FALSE, Show.P.label = FALSE)
 }
 }

@@ -2,15 +2,18 @@
 % Please edit documentation in R/run.R
 \name{app_run}
 \alias{app_run}
-\title{Run Xena Shiny App}
+\title{Run UCSC Xena Shiny App}
 \usage{
-app_run()
+app_run(runMode = "client")
+}
+\arguments{
+\item{runMode}{default is 'client' for personal user, set it to 'server' for running on server.}
 }
 \description{
-Run Xena Shiny App
+Run UCSC Xena Shiny App
 }
 \examples{
-\donttest{
+\dontrun{
 app_run()
 }
 }

@@ -14,9 +14,16 @@ ui.page_home <- function() {
               12,
               ui.home_search_box("homepage_pancan_search"),
               tags$h2("Data Portal Summary"),
-              tags$b(paste0("XenaShiny version ", packageVersion("UCSCXenaShiny"))),
+              tags$b(paste0(
+                "UCSCXenaShiny v", packageVersion("UCSCXenaShiny"),
+                " based on ",
+                "UCSCXenaTools v", packageVersion("UCSCXenaTools")
+              )),
               tags$br(),
-              tags$a(href = "https://xenabrowser.net/datapages/", "Data are controled by UCSC Xena"),
+              tags$b("Data source: "),
+              tags$a(href = "https://xenabrowser.net/datapages/", "UCSC Xena"),
+              " or ",
+              tags$a(href = "https://xena.hiplot.com.cn/datapages/", "Hiplot mirror"),
               tags$hr(),
               tags$div(
                 class = "card-deck text-center block-center",
@@ -110,26 +117,26 @@ ui.page_home <- function() {
           tags$br(),
           tabsetPanel(
             tabPanel(
-              "Sample Distribution",
+              "Cohort number",
               tags$br(),
               plotly::plotlyOutput("Xenasummary1", height = "100%")
             ),
             tabPanel(
-              "Dataset Distribution",
+              "Dataset number",
               tags$br(),
-              plotly::plotlyOutput("Xenasummary", height = "100%")
+              plotly::plotlyOutput("Xenasummary2", height = "100%")
             )
           )
         )
       ),
-      tags$br(),
-      tags$div(
-        class = "text-center",
-        tags$div(
-          class = "bg-dark text-white",
-          tags$p("The goal of XenaShiny is to provide a web app for downloading, analyzing and visulizing datasets from UCSC Xena, which is a collection of UCSC-hosted public databases such as TCGA, ICGC, TARGET, GTEx, CCLE, and others. Databases are normalized so they can be combined, linked, filtered, explored and downloaded.")
-        )
-      )
+      tags$br()
+      # tags$div(
+      #   class = "text-center",
+      #   tags$div(
+      #     class = "bg-dark text-white",
+      #     tags$p("The goal of XenaShiny is to provide a web app for downloading, analyzing and visualizing datasets from UCSC Xena hubs.")
+      #   )
+      # )
     )
   )
 }

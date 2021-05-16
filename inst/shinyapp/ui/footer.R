@@ -1,7 +1,9 @@
 ui.footer <- function() {
-  tags$footer(HTML("Copyright &copy; 2019&nbsp;&nbsp;&nbsp;&nbsp;"),
+  tags$footer(tags$hr(),
+    HTML("Copyright &copy; 2019 - "),
     tags$a(href = "https://github.com/openbiox", "Openbiox"),
-    HTML("- A community-driven bioinformatics innovation collaboration group in China |"),
+    tags$br(),
+    HTML("A community-driven bioinformatics innovation collaboration group in China |"),
     tags$a(href = "https://github.com/openbiox/XenaShiny/blob/master/LICENSE", "MIT License"),
     align = "center", style = "
                            position:relative;
