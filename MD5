@@ -1,7 +1,7 @@
-75bf7ec7d7ac84e30ec50fcbccda39b7 *DESCRIPTION
+bb2a50f112bceedb7aea0b81a1b1e81b *DESCRIPTION
 010aa4010c418ab72aa7d067ba82e043 *LICENSE
 39a30a89d6bab41f6500253d3c37ab49 *NAMESPACE
-1e0fd083dfb36fc6704beac034fb8d3c *NEWS.md
+6ba9ea49741a32bbf64f7e5370c0a715 *NEWS.md
 9310e0a900be1a5d6275ffc77b2ddbca *R/GeomSplitViolin.R
 906966fe93abfeabc45573e035219669 *R/analyze_gene_drug_response.R
 89bf1edbb177f292a0d3798f7f5652de *R/ccle.R
@@ -24,8 +24,8 @@ de6fbab76bf96bd16cc6ecc7cd70d2a9 *R/ope_pancan_value.R
 65bd79a8c41f99fe2a811eac66a7f1d8 *R/vis_pancan_value.R
 1328754ec3954068d08c401e065073d6 *R/vis_pcawg_value.R
 2b7c0ceb621b671c7f08b9bbfed867b5 *R/xenashiny.R
-3e606436a89e0667e107afb321b3de63 *README.md
-287e646e5e486d0f3f0a96bfb54c24ef *build/vignette.rds
+06d7625b6a9708b05f1101ba14fc10e0 *README.md
+05dc4e3004a82e379440ce12690f3406 *build/vignette.rds
 ab564de8f0372b34ec4d52309202b7bd *data/TCGA.organ.rda
 7b093e5cf5df008034fee97642d35d05 *data/ccle_absolute.rda
 89070400260c0b4cd5924131dd145d45 *data/ccle_info.rda
@@ -40,8 +40,9 @@ aae7ec6f56495534a63dba97dd777e2b *data/tcga_gtex.rda
 148ab8d33cbaa5ba3a537e934ae212d5 *data/toil_info.rda
 a12f77ac537e9fb8cec9861b986c73b3 *inst/doc/api.R
 c53fb3b68d7fae6a9c6e39bd3e59e80d *inst/doc/api.Rmd
-494b54c28dc870c6690110d68f8b1a83 *inst/doc/api.html
+6bf4206e587c78bb69581f03114ae4df *inst/doc/api.html
 d4ccdc90dde78aaa7a7d8522ddd34b84 *inst/extdata/XenaInfo.RData
+8bbbd0e045c2cb1f16b12a3ed921a377 *inst/extdata/ccle_drug_response_extend.rda
 18bce40b658e41ad2fb5fc7b51ed262c *inst/extdata/pancan_identifier_list.rds
 cdb4bc8369cd5f1bef2a24794f43be98 *inst/modules_apps/app.R
 64ac64217174311b5d6f2cf00303989f *inst/modules_apps/simple_module_from_rstudio.R
@@ -68,7 +69,7 @@ cd1b1cc277c05fdbeaa9586621cc09b8 *inst/shinyapp/modules/modules-pancan-search-ca
 4cd6c8b6ffb4afe52791b108dd25b38a *inst/shinyapp/modules/modules-pancan-unicox.R
 73fc8585ec911c938e18e3c42e3318ec *inst/shinyapp/modules/modules-pcawg-genecor.R
 524cecb6fc55e7be6c347acfea928998 *inst/shinyapp/modules/modules-pcawg-search.R
-62f1fff59879b647cccf85d8075a64e9 *inst/shinyapp/modules/modules-pcawg-survival-analysis.R
+5519fdd58bfa531cf7eaf1b28c3b0e2e *inst/shinyapp/modules/modules-pcawg-survival-analysis.R
 04087515cac206d22fb859cec807b433 *inst/shinyapp/modules/modules-pcawg-unicox.R
 428aceb99bb2fb6d4522b62039ddaf3f *inst/shinyapp/modules/modules-survival-analysis.R
 801379fa6dca536d88f516b0887cf590 *inst/shinyapp/server/general-analysis.R
@@ -84,7 +85,7 @@ b351967321d2f607acb0384eda587cb6 *inst/shinyapp/ui/chooser.R
 bea38004213810322942b75657322892 *inst/shinyapp/ui/footer.R
 545ae6531228604a0506dfe8aa8242c0 *inst/shinyapp/ui/general-analysis.R
 2e15d3bdac243fb5fde4a6d087b21375 *inst/shinyapp/ui/global.R
-0cad6920885ca0320ea35927b0d778dc *inst/shinyapp/ui/help.R
+9347b79627775cbcfeec573961f3ccd7 *inst/shinyapp/ui/help.R
 0aa09d9dddf4df8e5599153981bad416 *inst/shinyapp/ui/home.R
 8571f336c429df5e01d99ebccd59f196 *inst/shinyapp/ui/pancan-analysis.R
 ee29d6f0ea0f335926a842e4816ad1e2 *inst/shinyapp/ui/repository.R
