@@ -65,6 +65,8 @@ pacman::p_load(
   tidyr,
   stringr,
   magrittr,
+  R.utils,
+  data.table,
   dplyr,
   ggplot2,
   cowplot,
@@ -78,6 +80,7 @@ pacman::p_load(
   shinyWidgets,
   shinyalert,
   shinyFiles,
+  shinythemes,
   survival,
   survminer,
   ezcox,
@@ -87,11 +90,13 @@ pacman::p_load(
   fs,
   RColorBrewer,
   gganatogram,
+  ggcorrplot,
   ggstatsplot,
   ggradar,
   zip
 )
 
+options(shiny.maxRequestSize=1024*1024^2)
 message("Starting...")
 
 # Put data here -----------------------------------------------------------
@@ -254,13 +259,22 @@ xe_query_url <- function(data, use_cache = TRUE) {
 }
 
 get_data_df <- function(dataset, id) {
-  message("Querying data of identifier ", id, " from dataset ", dataset)
-  id_value <- get_data(dataset, id)
-  df <- dplyr::tibble(
-    sample = names(id_value),
-    X = as.numeric(id_value)
-  )
-  colnames(df)[2] <- id
+  if (dataset == "custom_phenotype_dataset") {
+    message("Loading custom phenotype data.")
+    df <- readRDS(file.path(tempdir(), "custom_phenotype_data.rds"))
+  } else {
+    message("Querying data of identifier ", id, " from dataset ", dataset)
+    id_value <- if (dataset == "custom_feature_dataset") {
+      UCSCXenaShiny:::query_custom_feature_value(id)
+    } else {
+      get_data(dataset, id)
+    }
+    df <- dplyr::tibble(
+      sample = names(id_value),
+      X = as.numeric(id_value)
+    )
+    colnames(df)[2] <- id 
+  }
   df
 }
 

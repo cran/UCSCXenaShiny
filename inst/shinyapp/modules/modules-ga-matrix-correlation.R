@@ -101,8 +101,10 @@ ui.modules_ga_matrix_correlation <- function(id) {
 }
 
 
-server.modules_ga_matrix_correlation <- function(input, output, session,
-                                                 selected_database_rm_phenotype, selected_database_add_url_and_phenotype) {
+server.modules_ga_matrix_correlation <- function(
+  input, output, session,
+  selected_database_rm_phenotype, selected_database_add_url_and_phenotype,
+  custom_file) {
   ns <- session$ns
 
   output$ga_data1_id <- renderUI({
@@ -120,7 +122,8 @@ server.modules_ga_matrix_correlation <- function(input, output, session,
     updateSelectizeInput(
       session,
       "ga_data1_mid",
-      choices = all_preload_identifiers,
+      choices = if (is.null(custom_file$fData)) all_preload_identifiers else
+        unique(c(custom_file$fData[[1]], all_preload_identifiers)),
       selected = c("TP53", "KRAS", "PTEN"),
       server = TRUE
     )
@@ -171,21 +174,48 @@ server.modules_ga_matrix_correlation <- function(input, output, session,
       if (inherits(p_scatter(), c("ggplot", "grob"))) {
         print(p_scatter())
       } else {
-        sendSweetAlert(
-          session,
-          title = "Error",
-          text = "Error to query data and plot. Please make sure the two selected datasets are 'genomicMatrix' type.",
-          type = "error"
-        )
+        if (!requireNamespace("ggpubr") | !requireNamespace("ggstatsplot")) {
+          sendSweetAlert(
+            session,
+            title = "Error",
+            text = "Error to lack of ggpubr/ggstatsplot package. Please make sure the according package has been installed.",
+            type = "error"
+          )
+        }else {
+          sendSweetAlert(
+            session,
+            title = "Error",
+            text = tags$span(
+              tags$p("Error to query data and plot. Please make sure the two selected datasets are 'genomicMatrix' type."),
+              tags$p("'genomicMatrix' type means the dataset is stored in feature-by-sample format, e.g., gene-by-sample expression matrix."),
+              tags$p("The type of datasets can be found at the dataset table by clicking 'Pre-selected Datasets for Analysis' on the 'General Analysis' Page."),
+              tags$img(src = "https://gitee.com/ShixiangWang/ImageCollection/raw/master/png/20210708184045.png",
+                       alt = "errorImg", width = "98%", height = "98%")
+            ),
+            type = "error"
+          )
+        }
       }
     )
 
     output$ga_output_data <- DT::renderDataTable(server = FALSE, {
       if (inherits(p_scatter(), "ggplot")) {
+        dt <- p_scatter()$data
+        if (input$ga_test_adjust == "none") {
+          names(dt)[4] <- "p"
+          caption <- "Note: the p values are not adjusted."
+        } else {
+          names(dt)[4] <- paste0("p.adj (", input$ga_test_adjust, ")")
+          caption <- paste0("Note: the p values are adjusted by ", input$ga_test_adjust, " method.")
+        }
         DT::datatable(
-          p_scatter()$data,
+          dt,
           rownames = FALSE,
           extensions = c("Buttons"),
+          caption = tags$caption(
+            style = "caption-side: bottom; text-align: left; margin: 8px 0;",
+            caption
+          ),
           options = list(
             pageLength = 5,
             dom = "Bfrtip",

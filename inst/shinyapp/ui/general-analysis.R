@@ -1,4 +1,5 @@
 ui.page_general_analysis <- function() {
+  # ns <- NS(id)
   # navbarMenu(
   #   title = "General Analysis",
   #   icon = icon("angle-double-down"),
@@ -11,7 +12,7 @@ ui.page_general_analysis <- function() {
     icon = icon("angle-double-down"),
     fluidRow(
       column(
-        5,
+        2,
         dropdownButton(
           inputId = "ga_drop_button",
           label = "Pre-selected Datasets for Analysis",
@@ -26,8 +27,38 @@ ui.page_general_analysis <- function() {
           placement = "right", options = list(container = "body")
         )
       ),
-      column(3,
-        offset = 4,
+      column(
+        1,
+        dropdownButton(
+          inputId = "ga_drop_button_custom_data",
+          tags$h3("Upload your data file"),
+          br(),
+          
+          fileInput("ga_input_feature_file", 
+                    label = "Feature-by-sample file (*.csv/.tsv/.txt), e.g., a gene expression matrix", 
+                    accept = c("text/plain", ".gz")),
+          tags$a(href="https://tcga-xena-hub.s3.us-east-1.amazonaws.com/download/TCGA.LAML.sampleMap%2FHiSeqV2.gz", "Click to download example feature data"),
+          br(),
+          
+          fileInput("ga_input_phenotype_file",
+                    label = "Phenotype file (*.csv/.tsv/.txt)",
+                    accept = c("text/plain", ".gz")),
+          tags$a(href="https://tcga-xena-hub.s3.us-east-1.amazonaws.com/download/TCGA.LAML.sampleMap%2FLAML_clinicalMatrix", "Click to download example phenotype data"),
+          
+          tags$h5("Note: Not both files are required. Prepare your upload files based on your analysis plan.\nBesides, make sure upload files have correct file extensions."),
+          
+          br(),
+          icon = icon("upload"),
+          circle = FALSE
+        ),
+        shinyBS::bsPopover("ga_drop_button_custom_data",
+                           title = "Tips",
+                           content = "Click to upload custom data for analysis",
+                           placement = "right", options = list(container = "body")
+        )
+      ),
+      column(4,
+        offset = 5,
         shinyWidgets::actionBttn(
           inputId = "use_ga_page",
           label = "How to use",
