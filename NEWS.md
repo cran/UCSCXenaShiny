@@ -1,3 +1,11 @@
+# UCSCXenaShiny 1.1.4
+
+- Fixed the colnames being changed by `as.data.frame()` when querying a symbol with unvalid R name. (Related to #234)
+- Added more informative error for scatter plot in General Analysis tab. (#233)
+- Reversed default color setting for groups in survival analysis to fit conventional color grouping (in Xena).
+(#232, thanks to feedback from [Enrique](https://github.com/quiquemedina))
+- Supported known science palette and custom colors for survival analysis in Quick PanCan Analysis tab.
+
 # UCSCXenaShiny 1.1.3
 
 - Data check. (#225)

@@ -1,6 +1,6 @@
-dbe4ff1302b2eeb46380ecb03a792c2d *DESCRIPTION
+d848b225b485d9faf120dfbeb8d3928e *DESCRIPTION
 f26a2c68a4ad118fc5658e702464190e *NAMESPACE
-00d697859c38200438c1e47b82684775 *NEWS.md
+4fa0460220eb650887d8140464ca34ba *NEWS.md
 9310e0a900be1a5d6275ffc77b2ddbca *R/GeomSplitViolin.R
 e87cc8ce769e028e61a62efc6d5b135a *R/analyze_gene_drug_response.R
 89bf1edbb177f292a0d3798f7f5652de *R/ccle.R
@@ -13,9 +13,9 @@ e87cc8ce769e028e61a62efc6d5b135a *R/analyze_gene_drug_response.R
 de6fbab76bf96bd16cc6ecc7cd70d2a9 *R/ope_pancan_value.R
 748946f8b150818120cc6c8548849c68 *R/query_custom_value.R
 3f81d13cd6eaf280ac0e0267b497dbd6 *R/query_toil_value_df.R
-9157d09566e455badcc136b7881b2122 *R/query_value.R
+6cc1f2cb154e6aae0a3c4c522466c0cf *R/query_value.R
 aaea54ee7420b4e9a7718c97421053ee *R/run.R
-3f0f03500cfa85cb86bbd78bb74c63d7 *R/tcga_surv.R
+ba1fc6b729b861906cece31f30bb8d99 *R/tcga_surv.R
 34d79b91bd0b0d46913f5d63f3127ecd *R/utils-pipe.R
 1279ed2d3ff3adda36cb2146722348aa *R/utils.R
 1469727308882ffb645cfed8e31c1bc4 *R/vis_analyze_gene_drug_response.R
@@ -25,7 +25,7 @@ e004fa0e0ef4bfc553d67a6fcd516896 *R/vis_pancan_value.R
 1328754ec3954068d08c401e065073d6 *R/vis_pcawg_value.R
 1598ef9eda4134b4cbb234fc124200a7 *R/xenashiny.R
 e3e94594cd3c85e47583ade8478afa17 *R/zzz.R
-f067c90e3335a85a746b9a86c33e30cc *README.md
+ae450de11a12af862277a4f113269715 *README.md
 879fa4320bc155717360dc7179fe83cc *build/vignette.rds
 ab564de8f0372b34ec4d52309202b7bd *data/TCGA.organ.rda
 7b093e5cf5df008034fee97642d35d05 *data/ccle_absolute.rda
@@ -41,7 +41,7 @@ aae7ec6f56495534a63dba97dd777e2b *data/tcga_gtex.rda
 148ab8d33cbaa5ba3a537e934ae212d5 *data/toil_info.rda
 a12f77ac537e9fb8cec9861b986c73b3 *inst/doc/api.R
 c53fb3b68d7fae6a9c6e39bd3e59e80d *inst/doc/api.Rmd
-9abce8e0b29cf44ea2c25269163c55f3 *inst/doc/api.html
+5e49cdf9b62f8f51bd922ed7f5aa0e36 *inst/doc/api.html
 d4ccdc90dde78aaa7a7d8522ddd34b84 *inst/extdata/XenaInfo.RData
 18bce40b658e41ad2fb5fc7b51ed262c *inst/extdata/pancan_identifier_list.rds
 08dc07c10504156f10ea8b0ee6d87999 *inst/extdata/tcga_armcalls.rda
@@ -58,7 +58,7 @@ dab600e159d5dd69c815a1b564ff81b1 *inst/shinyapp/modules/modules-ccle-gene-drug-t
 86e8522a0712495e6d541f435afaa81c *inst/shinyapp/modules/modules-file-upload.R
 a4fb40c6f3f3f50bb8b72927a260735b *inst/shinyapp/modules/modules-ga-group-comparison.R
 f034dcca0f4c0bcee08aa53a5afea2d8 *inst/shinyapp/modules/modules-ga-matrix-correlation.R
-c946f393abdf59de5b376d77d3c8c8e3 *inst/shinyapp/modules/modules-ga-scatter-correlation.R
+5186fb79dada03784bb8398380b61055 *inst/shinyapp/modules/modules-ga-scatter-correlation.R
 578cc0e55a90856c80807bc37c52164c *inst/shinyapp/modules/modules-ga-surv-analysis.R
 f087d1b7d8614ccd5f268030e5abd1b5 *inst/shinyapp/modules/modules-pancan-anatomy.R
 bf1f49e8805be46fad65035a969e583f *inst/shinyapp/modules/modules-pancan-genecor.R
@@ -70,9 +70,9 @@ ce6c2aea1ce1c637f87b0567de727681 *inst/shinyapp/modules/modules-pancan-search.R
 3d05ea5f2d0b07e9f72b059ceb1ddec6 *inst/shinyapp/modules/modules-pancan-unicox.R
 6a0ef4a03a1fee48db804dfb495095c6 *inst/shinyapp/modules/modules-pcawg-genecor.R
 4f98b0a459508479226ae7c083c60728 *inst/shinyapp/modules/modules-pcawg-search.R
-e8b14bd7669082053596de139c746472 *inst/shinyapp/modules/modules-pcawg-survival-analysis.R
+9feb309661a5e9d727cd1ec815a081c5 *inst/shinyapp/modules/modules-pcawg-survival-analysis.R
 d9d29c70d3d2b2aa8311ce72d49afab6 *inst/shinyapp/modules/modules-pcawg-unicox.R
-7ce920818ac91d3fa689c9bb811f3f48 *inst/shinyapp/modules/modules-survival-analysis.R
+09d1f8c905aadca46920700ac01d187b *inst/shinyapp/modules/modules-survival-analysis.R
 f26aae606f7b7b6fcb45eded9d1c30a2 *inst/shinyapp/server/general-analysis.R
 a33d8f2ea966bf640d61d08f33c793f3 *inst/shinyapp/server/global.R
 5afc7f37a9ba9134f3690cd8536b6d0f *inst/shinyapp/server/home.R
