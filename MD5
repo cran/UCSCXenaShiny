@@ -1,6 +1,6 @@
-d848b225b485d9faf120dfbeb8d3928e *DESCRIPTION
+e45d504cb60c104ca00c29e206c13241 *DESCRIPTION
 f26a2c68a4ad118fc5658e702464190e *NAMESPACE
-4fa0460220eb650887d8140464ca34ba *NEWS.md
+0b2157b51c21bbd579f1c5e3d0d55452 *NEWS.md
 9310e0a900be1a5d6275ffc77b2ddbca *R/GeomSplitViolin.R
 e87cc8ce769e028e61a62efc6d5b135a *R/analyze_gene_drug_response.R
 89bf1edbb177f292a0d3798f7f5652de *R/ccle.R
@@ -26,7 +26,7 @@ e004fa0e0ef4bfc553d67a6fcd516896 *R/vis_pancan_value.R
 1598ef9eda4134b4cbb234fc124200a7 *R/xenashiny.R
 e3e94594cd3c85e47583ade8478afa17 *R/zzz.R
 ae450de11a12af862277a4f113269715 *README.md
-879fa4320bc155717360dc7179fe83cc *build/vignette.rds
+05dc4e3004a82e379440ce12690f3406 *build/vignette.rds
 ab564de8f0372b34ec4d52309202b7bd *data/TCGA.organ.rda
 7b093e5cf5df008034fee97642d35d05 *data/ccle_absolute.rda
 89070400260c0b4cd5924131dd145d45 *data/ccle_info.rda
@@ -41,8 +41,9 @@ aae7ec6f56495534a63dba97dd777e2b *data/tcga_gtex.rda
 148ab8d33cbaa5ba3a537e934ae212d5 *data/toil_info.rda
 a12f77ac537e9fb8cec9861b986c73b3 *inst/doc/api.R
 c53fb3b68d7fae6a9c6e39bd3e59e80d *inst/doc/api.Rmd
-5e49cdf9b62f8f51bd922ed7f5aa0e36 *inst/doc/api.html
+9ac94825bffdc56fca97bd9da0bcd59e *inst/doc/api.html
 d4ccdc90dde78aaa7a7d8522ddd34b84 *inst/extdata/XenaInfo.RData
+8bbbd0e045c2cb1f16b12a3ed921a377 *inst/extdata/ccle_drug_response_extend.rda
 18bce40b658e41ad2fb5fc7b51ed262c *inst/extdata/pancan_identifier_list.rds
 08dc07c10504156f10ea8b0ee6d87999 *inst/extdata/tcga_armcalls.rda
 cdb4bc8369cd5f1bef2a24794f43be98 *inst/modules_apps/app.R
@@ -59,7 +60,7 @@ dab600e159d5dd69c815a1b564ff81b1 *inst/shinyapp/modules/modules-ccle-gene-drug-t
 a4fb40c6f3f3f50bb8b72927a260735b *inst/shinyapp/modules/modules-ga-group-comparison.R
 f034dcca0f4c0bcee08aa53a5afea2d8 *inst/shinyapp/modules/modules-ga-matrix-correlation.R
 5186fb79dada03784bb8398380b61055 *inst/shinyapp/modules/modules-ga-scatter-correlation.R
-578cc0e55a90856c80807bc37c52164c *inst/shinyapp/modules/modules-ga-surv-analysis.R
+b4509e435ded5575a3602e3229c339f2 *inst/shinyapp/modules/modules-ga-surv-analysis.R
 f087d1b7d8614ccd5f268030e5abd1b5 *inst/shinyapp/modules/modules-pancan-anatomy.R
 bf1f49e8805be46fad65035a969e583f *inst/shinyapp/modules/modules-pancan-genecor.R
 4918ae5250b23791a9def7fcc96bbe5d *inst/shinyapp/modules/modules-pancan-immune.R
