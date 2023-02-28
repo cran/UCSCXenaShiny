@@ -1,6 +1,6 @@
 Package: UCSCXenaShiny
 Title: Interactive Analysis of UCSC Xena Data
-Version: 1.1.9
+Version: 1.1.10
 Authors@R: 
     c(person(given = "Shixiang",
              family = "Wang",
@@ -52,7 +52,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
 NeedsCompilation: no
-Packaged: 2022-12-08 13:16:13 UTC; wsx
+Packaged: 2023-02-28 14:53:10 UTC; wsx
 Author: Shixiang Wang [aut, cre] (<https://orcid.org/0000-0001-9855-7357>),
   Yi Xiong [aut] (<https://orcid.org/0000-0002-4370-9824>),
   Longfei Zhao [aut] (<https://orcid.org/0000-0002-6277-0137>),
@@ -60,4 +60,4 @@ Author: Shixiang Wang [aut, cre] (<https://orcid.org/0000-0001-9855-7357>),
   Yin Li [aut],
   Fei Zhao [aut]
 Repository: CRAN
-Date/Publication: 2022-12-12 09:00:03 UTC
+Date/Publication: 2023-02-28 15:32:34 UTC
