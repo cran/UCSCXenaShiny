@@ -1,4 +1,5 @@
 # Global setting ---------------------------------------------------------
+options(shiny.fullstacktrace=TRUE)
 xena.runMode <- getOption("xena.runMode", default = "client")
 message("Run mode: ", xena.runMode)
 
@@ -22,7 +23,7 @@ if (xena.runMode == "server") {
 }
 
 # Load necessary packages ----------------------------------
-message("Checking depedencies...")
+message("Checking dependencies...")
 
 if (!requireNamespace("pacman")) {
   install.packages("pacman", repos = "http://cran.r-project.org")
@@ -70,8 +71,10 @@ pacman::p_load(
   dplyr,
   ggplot2,
   cowplot,
+  patchwork,
   ggpubr,
   plotly,
+  UpSetR,
   UCSCXenaTools,
   UCSCXenaShiny,
   shiny,
@@ -80,7 +83,11 @@ pacman::p_load(
   shinyWidgets,
   shinyalert,
   shinyFiles,
+  shinyFeedback,
   shinythemes,
+  shinyhelper,
+  shinycssloaders,
+  shinydashboard,
   survival,
   survminer,
   ezcox,
@@ -93,122 +100,37 @@ pacman::p_load(
   ggcorrplot,
   ggstatsplot,
   ggradar,
-  zip
+  zip,
+  msigdbr,
+  slickR
 )
 
 options(shiny.maxRequestSize=1024*1024^2)
 message("Starting...")
 
 # Put data here -----------------------------------------------------------
-data("XenaData", package = "UCSCXenaTools", envir = environment())
-xena_table <- XenaData[, c(
-  "XenaDatasets", "XenaHostNames", "XenaCohorts",
-  "SampleCount", "DataSubtype", "Label", "Unit"
-)]
-xena_table$SampleCount <- as.integer(xena_table$SampleCount)
-colnames(xena_table)[c(1:3)] <- c("Dataset ID", "Hub", "Cohort")
+#source(system.file("shinyapp/appdata.R", package = "UCSCXenaShiny"))
 
-# Used in TCGA survival module
-TCGA_datasets <- xena_table %>%
-  dplyr::filter(Hub == "tcgaHub") %>%
-  dplyr::select("Cohort") %>%
-  unique() %>%
-  dplyr::mutate(
-    id = stringr::str_match(Cohort, "\\((\\w+?)\\)")[, 2],
-    des = stringr::str_match(Cohort, "(.*)\\s+\\(")[, 2]
-  ) %>%
-  dplyr::arrange(id)
-
-# Used in genecor and pancan-search-cancer module script
-tcga_cancer_choices <- c(
-  "SKCM", "THCA", "SARC", "PRAD", "PCPG", "PAAD", "HNSC", "ESCA",
-  "COAD", "CESC", "BRCA", "TGCT", "KIRP", "KIRC", "LAML", "READ",
-  "OV", "LUAD", "LIHC", "UCEC", "GBM", "LGG", "UCS", "THYM", "STAD",
-  "DLBC", "LUSC", "MESO", "KICH", "UVM", "BLCA", "CHOL", "ACC"
-)
-
-TCGA_cli_merged <- dplyr::full_join(
-  load_data("tcga_clinical"),
-  load_data("tcga_surv"),
-  by = "sample"
-)
-
-pancan_identifiers <- readRDS(
-  system.file(
-    "extdata", "pancan_identifier_list.rds",
-    package = "UCSCXenaShiny"
-  )
-)
-all_preload_identifiers <- c("NONE", as.character(unlist(pancan_identifiers)))
-tryCatch(
-  load_data("transcript_identifier"),
-  error = function(e) {
-    stop("Load data failed, please run load_data('transcript_identifier') by hand before restarting the Shiny.")
-  }
-)
-
-phenotype_datasets <- UCSCXenaTools::XenaData %>%
-  dplyr::filter(Type == "clinicalMatrix") %>%
-  dplyr::pull(XenaDatasets)
-
-themes_list <- list(
-  "cowplot" = cowplot::theme_cowplot(),
-  "Light" = theme_light(),
-  "Minimal" = theme_minimal(),
-  "Classic" = theme_classic(),
-  "Gray" = theme_gray(),
-  "half_open" = cowplot::theme_half_open(),
-  "minimal_grid" = cowplot::theme_minimal_grid()
-)
-
-TIL_signatures <- colnames(load_data("tcga_TIL"))[-1]
-
-# CCLE tissues for drug analysis
-# "ALL" means all tissues
-ccle_drug_related_tissues <- c(
-  "ALL", "prostate", "central_nervous_system", "urinary_tract", "haematopoietic_and_lymphoid_tissue",
-  "kidney", "thyroid", "soft_tissue", "skin", "salivary_gland",
-  "ovary", "lung", "bone", "endometrium", "pancreas", "breast",
-  "large_intestine", "upper_aerodigestive_tract", "autonomic_ganglia",
-  "stomach", "liver", "biliary_tract", "pleura", "oesophagus"
-)
-
-# Data summary
-Data_hubs_number <- length(unique(xena_table$Hub))
-Cohorts_number <- length(unique(xena_table$Cohort))
-Datasets_number <- length(unique(xena_table$`Dataset ID`))
-Samples_number <- "~2,000,000"
-Primary_sites_number <- "~37"
-Data_subtypes_number <- "~45"
-Xena_summary <- dplyr::group_by(xena_table, Hub) %>%
-  dplyr::summarise(
-    n_cohort = length(unique(.data$Cohort)),
-    n_dataset = length(unique(.data$`Dataset ID`)), .groups = "drop"
-  )
-
-# PCAWG project info
-dcc_project_code_choices <- c(
-  "BLCA-US", "BRCA-US", "OV-AU", "PAEN-AU", "PRAD-CA", "PRAD-US", "RECA-EU", "SKCM-US", "STAD-US",
-  "THCA-US", "KIRP-US", "LIHC-US", "PRAD-UK", "LIRI-JP", "PBCA-DE", "CESC-US", "PACA-AU", "PACA-CA",
-  "LAML-KR", "COAD-US", "ESAD-UK", "LINC-JP", "LICA-FR", "CLLE-ES", "HNSC-US", "EOPC-DE", "BRCA-UK",
-  "BOCA-UK", "MALY-DE", "CMDI-UK", "BRCA-EU", "ORCA-IN", "BTCA-SG", "SARC-US", "KICH-US", "MELA-AU",
-  "DLBC-US", "GACA-CN", "PAEN-IT", "GBM-US", "KIRC-US", "LAML-US", "LGG-US", "LUAD-US", "LUSC-US",
-  "OV-US", "READ-US", "UCEC-US"
-)
-
-
-# Global color
-mycolor <- c(RColorBrewer::brewer.pal(12, "Paired"))
+appdata_path = path.expand(file.path(getOption("xena.cacheDir"), "appdata.RData"))
+message("Checking shiny app data from ", appdata_path, "...")
+if (!file.exists(appdata_path)) {
+  message("Processing and caching shiny app data...")
+  source(system.file("shinyapp/appdata.R", package = "UCSCXenaShiny"))
+  message("Done")
+} else {
+  load(appdata_path)
+  message("Cached processed data used.")
+}
 
 # Put modules here --------------------------------------------------------
 modules_path <- system.file("shinyapp", "modules", package = "UCSCXenaShiny", mustWork = TRUE)
-modules_file <- dir(modules_path, pattern = "\\.R$", full.names = TRUE)
+modules_file <- dir(modules_path, pattern = "\\.R$", full.names = TRUE, recursive = TRUE)
 sapply(modules_file, function(x, y) source(x, local = y), y = environment())
 
 
 # Put page UIs here -----------------------------------------------------
 pages_path <- system.file("shinyapp", "ui", package = "UCSCXenaShiny", mustWork = TRUE)
-pages_file <- dir(pages_path, pattern = "\\.R$", full.names = TRUE)
+pages_file <- dir(pages_path, pattern = "\\.R$", full.names = TRUE, recursive = TRUE)
 sapply(pages_file, function(x, y) source(x, local = y), y = environment())
 
 
@@ -290,22 +212,56 @@ ui <- tagList(
               top: calc(50% - 50px);;
               left: calc(50% - 400px);;
             }")
+    ),
+    tags$style(
+      '[data-value = "Sole Analysis for Single Cancer"] {
+        width: 400px;
+       background-color: #bdbdbd;
+      }
+       [data-value = "Sole Analysis for Multiple Cancers"] {
+        width: 400px;
+       background-color: #525252;
+      }
+       [data-value = "Batch Analysis for Single Cancer"] {
+        width: 400px;
+       background-color: #525252;
+      }
+       [data-value = "Sole Analysis for Cell Lines"] {
+        width: 400px;
+       background-color: #bdbdbd;
+      }
+       [data-value = "Batch Analysis for Cell Lines"] {
+        width: 400px;
+       background-color: #525252;
+      }
+      .tab-pane {
+        background-color: transparent;
+        width: 100%;
+        }
+      .nav-tabs {font-size: 20px}   
+      '
     )
   ),
   shinyjs::useShinyjs(),
-  use_waiter(),
-  waiter_on_busy(html = spin_3k(), color = transparent(0.7)),
+  autoWaiter(html = spin_loader(), color = transparent(0.5)), # change style https://shiny.john-coene.com/waiter/
   navbarPage(
     id = "navbar",
-    title = div(
-      img(src = "xena_shiny-logo_white.png", height = 49.6, style = "margin:-20px -15px -15px -15px")
-    ),
+    title = "UCSCXenaShiny v2",
+    # div(
+    #   img(src = "xena_shiny-logo_white.png", height = 49.6, style = "margin:-20px -15px -15px -15px")
+    # ),
+    windowTitle = "UCSCXenaShiny",
     # inst/shinyapp/ui
     ui.page_home(),
     ui.page_repository(),
     ui.page_general_analysis(),
-    ui.page_pancan(),
-    ui.page_global(),
+    ui.page_pancan_quick(),
+    ui.page_pancan_tcga(),
+    ui.page_PharmacoGenomics(),
+    # ui.page_pancan_pcawg(),
+    # ui.page_pancan_ccle(),
+    ui.page_download(),
+    # ui.page_global(),
     ui.page_help(),
     ui.page_developers(),
     footer = ui.footer(),
@@ -318,21 +274,34 @@ ui <- tagList(
   )
 )
 
+
 # Server Part ---------------------------------------------------------------
 server <- function(input, output, session) {
   message("Shiny app run successfully! Enjoy it!\n")
   message("               --  Xena shiny team\n")
+  # Stop warn
+  storeWarn <- getOption("warn")
+  options(warn = -1) 
+  # observe(print(input$navbar))
 
   # inst/shinyapp/server
   source(server_file("home.R"), local = TRUE)
   source(server_file("repository.R"), local = TRUE)
   source(server_file("modules.R"), local = TRUE)
-  source(server_file("global.R"), local = TRUE)
+
+  # observeEvent({input$navbar=="TCGA+GTEx: Molecular Profile Distribution Across Cancer Types (Tumor VS Normal)"},{
+  #     callModule(server.modules_pancan_dist, "module_gene_pancan_dist")
+  # }, once = TRUE, ignoreInit = TRUE)  
+
+  # source(server_file("global.R"), local = TRUE)
+
   source(server_file("general-analysis.R"), local = TRUE)
+  # observe_helpers(help_dir ="helper")
+  observe_helpers(help_dir = system.file("shinyapp", "helper", package = "UCSCXenaShiny"))
+
 }
 
 # Run web app -------------------------------------------------------------
-
 shiny::shinyApp(
   ui = ui,
   server = server

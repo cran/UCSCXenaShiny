@@ -17,7 +17,8 @@
 #' @param cutpoint cut point (in percent) for "Custom" mode, default is `c(50, 50)`.
 #' @param cnv_type only used when profile is "cnv", can select from `c("Duplicated", "Normal", "Deleted")`.
 #' @param data a subset of result from `tcga_surv_get()`.
-#'
+#' @param opt_pancan specify one dataset for some molercular profiles
+#' 
 #' @return a `data.frame` or a plot.
 #' @export
 #' @examples
@@ -35,15 +36,15 @@ tcga_surv_get <- function(item,
                           TCGA_cli_data = dplyr::full_join(
                             load_data("tcga_clinical"),
                             load_data("tcga_surv"),
-                            by = "sample"
-                          )) {
+                            by = "sample"),
+                          opt_pancan = .opt_pancan) {
   stopifnot(length(item) == 1)
   profile <- match.arg(profile)
   if (!requireNamespace("stringr")) {
     install.packages("stringr")
   }
 
-  print(head(TCGA_cli_data))
+  # print(head(TCGA_cli_data))
   # type 有几种额外的 Xena 做过聚合的结果
   # "COADREAD" "FPPP"     "GBMLGG"   "LUNG"     "PANCAN"
   # FPPP 好像不是正常的样本，不推荐使用，已去除
@@ -61,7 +62,7 @@ tcga_surv_get <- function(item,
 
   message("Querying data of molecule(s) ", item, " for survival analysis in TCGA cohort ", TCGA_cohort, ".")
 
-  gd <- query_pancan_value(item, data_type = profile)
+  gd <- query_pancan_value(item, data_type = profile, opt_pancan = opt_pancan)
   if (is.list(gd)) gd <- gd[[1]]
 
   if (all(is.na(gd))) {

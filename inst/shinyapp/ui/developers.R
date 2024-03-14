@@ -26,6 +26,40 @@ ui.page_developers <- function() {
               )
             ),
             tags$div(
+              class = "card bg-info",
+              tags$div(
+                class = "card-body",
+                tags$img(
+                  src = "https://avatars3.githubusercontent.com/u/80585985?s=400&v=4.png",
+                  class = "img-circle",
+                  alt = "logo", style = "width: 30% ; margin: 0 auto "
+                ),
+                tags$h4(class = "card-title", "Shensuo Li"),
+                tags$p(class = "card-text", "Developer of XenaShiny v2")
+              ),
+              tags$div(
+                class = "card-footer",
+                tags$a(href = "https://github.com/lishensuo", class = "card-link", "See Profile")
+              )
+            ),
+            tags$div(
+              class = "card bg-info",
+              tags$div(
+                class = "card-body",
+                tags$img(
+                  src = "https://avatars.githubusercontent.com/u/52995448?v=4",
+                  class = "img-circle",
+                  alt = "logo", style = "width: 30% ; margin: 0 auto "
+                ),
+                tags$h4(class = "card-title", "Yuzhong Peng"),
+                tags$p(class = "card-text", "Developer of XenaShiny v2 (PharmacoGenomics)")
+              ),
+              tags$div(
+                class = "card-footer",
+                tags$a(href = "https://github.com/mugpeng", class = "card-link", "See Profile")
+              )
+            ),   
+            tags$div(
               class = "card bg-warning",
               tags$div(
                 class = "card-body",
@@ -42,6 +76,10 @@ ui.page_developers <- function() {
                 tags$a(href = "https://github.com/fei0810", class = "card-link", "See Profile")
               )
             ),
+          ),
+          tags$br(),
+          tags$div(
+            class = "card-deck text-center block-center",
             tags$div(
               class = "card bg-info",
               tags$div(
@@ -58,11 +96,7 @@ ui.page_developers <- function() {
                 class = "card-footer",
                 tags$a(href = "https://github.com/Byronxy", class = "card-link", "See Profile")
               )
-            )
-          ),
-          tags$br(),
-          tags$div(
-            class = "card-deck text-center block-center",
+            ),
             tags$div(
               class = "card bg-warning",
               tags$div(

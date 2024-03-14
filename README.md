@@ -3,14 +3,12 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/UCSCXenaShiny)](https://cran.r-project.org/package=UCSCXenaShiny)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/UCSCXenaShiny?color=orange)](https://cran.r-project.org/package=UCSCXenaShiny)
-[![lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html) 
 ![R-CMD-check](https://github.com/openbiox/UCSCXenaShiny/workflows/R-CMD-check/badge.svg)
-[![Lines Of
-Code](https://tokei.rs/b1/github/openbiox/UCSCXenaShiny?category=code)](https://github.com/openbiox/UCSCXenaShiny/)
 [![check in Biotreasury](https://img.shields.io/badge/Biotreasury-collected-brightgreen)](https://biotreasury.rjmart.cn/#/tool?id=61144)
 
 **UCSCXenaShiny** is an R package for interactively exploring UCSC Xena.
-It is mainly designed to provide a web app (built on the top of [`{shiny}`](https://shiny.rstudio.com/) framework and [`{UCSCXenaTools}`](https://github.com/ropensci/UCSCXenaTools/) package) for downloading,
+It is mainly designed to provide a web app (built on the top of [`{shiny}`](https://shiny.posit.co/) framework and [`{UCSCXenaTools}`](https://github.com/ropensci/UCSCXenaTools/) package) for downloading,
 analyzing and visualizing datasets from [UCSC
 Xena](https://xenabrowser.net/datapages/).
 
@@ -26,7 +24,7 @@ Shixiang Wang<sup>\#</sup>, Yi Xiong<sup>\#</sup>, Longfei Zhao<sup>\#</sup>, Ka
 
 ## :cloud: Use on cloud
 
-If you don't want to install R and packages locally, or you have no programming experience, try using this tool on `Hiplot-academic` platform (<https://shiny.hiplot-academic.com/ucsc-xena-shiny/>) or `shinyapps.io` (<https://shixiangwang.shinyapps.io/ucscxenashiny/>).
+If you don't want to install R and packages locally, or you have no programming experience, try using this tool on `Oncoharmony Network` (<http://shiny.zhoulab.ac.cn/UCSCXenaShiny>) or `Hiplot ORG` platform (<https://shiny.hiplot.cn/ucsc-xena-shiny>).
 
 ## :snake: Use with Conda
 
@@ -48,7 +46,9 @@ conda search r-ucscxenashiny --channel conda-forge
 
 ## :package: Use with Docker
 
-<img alt="Docker Image Version (latest by date)" src="https://img.shields.io/docker/v/shixiangwang/ucscxenashiny?color=blue"> <img alt="Docker Image Size (latest by date)" src="https://img.shields.io/docker/image-size/shixiangwang/ucscxenashiny"> <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/shixiangwang/ucscxenashiny">
+<img alt="Docker Image Version (latest by date)" src="https://img.shields.io/docker/v/shixiangwang/ucscxenashiny?color=blue">
+<img alt="Docker Image Size (latest by date)" src="https://img.shields.io/docker/image-size/shixiangwang/ucscxenashiny">
+<img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/shixiangwang/ucscxenashiny">
 
 UCSCXenaShiny has corresponding docker image at <https://hub.docker.com/r/shixiangwang/ucscxenashiny/>, you can install the latest version with:
 
@@ -57,13 +57,14 @@ docker pull shixiangwang/ucscxenashiny
 ```
 
 All versions can be found at <https://hub.docker.com/r/shixiangwang/ucscxenashiny/tags/>.
-To use a specified version (e.g., `v1.0.2`), run the following command to install:
+To use a specified version (e.g., `v1.0.2`; latest code commit will auto-build a tag `master`), run the following command to install:
 
 ```bash
 docker pull shixiangwang/ucscxenashiny:v1.0.2
+# docker pull shixiangwang/ucscxenashiny:master  # For latest code, unstable
 ```
 
-Then run the docker image with:
+Run the latest stable docker image and keep it at background with:
 
 ```bash
 docker run -d --name xenashiny -p 3838:3838 shixiangwang/ucscxenashiny
@@ -71,6 +72,18 @@ docker run -d --name xenashiny -p 3838:3838 shixiangwang/ucscxenashiny
 
 Now you should find the Shiny when you open URL `http://127.0.0.1:3838` with your web browser.
 If you deploy the docker in a public (cloud) Linux server, change `127.0.0.1` to the host IP.
+
+If the application failed to start. Check if the container has installed all dependencies.
+
+```bash
+docker exec xenashiny Rscript /opt/ext-deps.R
+```
+
+Or you can interactively check the container:
+
+```bash
+docker exec -it xenashiny /bin/bash
+```
 
 You can manage the deployed container with the following commands:
 
@@ -96,10 +109,10 @@ with:
 remotes::install_github("openbiox/UCSCXenaShiny")
 ```
 
-Or Gitee (for Chinese users):
+Or r-universe:
 
 ```r
-remotes::install_git("https://gitee.com/XenaShiny/UCSCXenaShiny")
+install.packages("UCSCXenaShiny", repos = c("https://openbiox.r-universe.dev", "https://cran.r-project.org"))
 ```
 
 Other dependent R packages specific to the Shiny application will be automatically installed when you start with `app_run()` command. If you failed to install **UCSCXenaShiny**, please check if the following system dependencies have been properly installed or see [**Troubleshooting**](#hammer_and_wrench-troubleshooting) section for specific installation issues.
@@ -162,7 +175,12 @@ All exported data and functions are organized at [here](https://openbiox.github.
 e.g.,
 
 ```r
-options(xena.cacheDir = "/home/xxx/xena_data")
+xena.cacheDir = "/xena"
+xena.zenodoDir = "/xena/datasets"
+
+options(xena.cacheDir = xena.cacheDir, xena.zenodoDir = xena.zenodoDir)
+
+options(xena.runMode = "server")
 ```
 
 Option `xena.runMode` can be used to control the way how the Shiny works.
@@ -278,8 +296,10 @@ It can be 'client' or 'server'. You can directly set it in `app_run()`.
 
   - [Shixiang Wang](https://github.com/ShixiangWang)
   - [Yi Xiong](https://github.com/Byronxy)
+  - [Shensuo Li](https://github.com/lishensuo)
   - [Longfei Zhao](https://github.com/longfei8533)
   - [Kai Gu](https://github.com/kaigu1990)
+  - [Yuzhong Peng](https://github.com/mugpeng)
   - [Yin Li](https://github.com/yinlisssss)
   - [Fei Zhao](https://github.com/fei0810)
 

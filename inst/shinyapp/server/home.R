@@ -1,85 +1,103 @@
-callModule(server.home_search_box, "homepage_pancan_search")
 
-output$Xenasummary1 <- plotly::renderPlotly({
-  p <- Xena_summary %>%
-    ggplot(aes(x = Hub, y = n_cohort, fill = Hub)) +
-    ggplot2::geom_bar(stat = "identity", width = 0.8) +
-    ggplot2::coord_flip() +
-    ggplot2::labs(x = NULL, y = NULL) +
-    ggplot2::theme_bw(base_size = 15) + # 去除背景色
-    ggplot2::theme(panel.grid = ggplot2::element_blank()) + # 去除网格线
-    ggplot2::theme(panel.border = ggplot2::element_blank()) + # 去除外层边框
-    ggplot2::theme(axis.line = ggplot2::element_line(colour = "black")) + # 沿坐标轴显示直线
-    ggplot2::guides(fill = "none") +
-    ggplot2::guides(color = "none") +
-    ggplot2::scale_fill_manual(values = mycolor)
-  plotly::ggplotly(p) %>% plotly::layout(showlegend = FALSE)
+observeEvent(input$bt03, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "Citation")
+  shinyjs::runjs("window.scrollTo(0, 0)")
 })
 
-output$Xenasummary2 <- plotly::renderPlotly({
-  p <- Xena_summary %>%
-    ggplot(aes(x = Hub, y = n_dataset, fill = Hub)) +
-    ggplot2::geom_bar(stat = "identity", width = 0.8) +
-    ggplot2::coord_flip() +
-    ggplot2::labs(x = NULL, y = NULL) +
-    ggplot2::theme_bw(base_size = 15) + # 去除背景色
-    ggplot2::theme(panel.grid = ggplot2::element_blank()) + # 去除网格线
-    ggplot2::theme(panel.border = ggplot2::element_blank()) + # 去除外层边框
-    ggplot2::theme(axis.line = ggplot2::element_line(colour = "black")) + # 沿坐标轴显示直线
-    ggplot2::guides(fill = FALSE) +
-    ggplot2::guides(color = FALSE) +
-    ggplot2::scale_fill_manual(values = mycolor)
-  plotly::ggplotly(p) %>% plotly::layout(showlegend = FALSE)
+
+
+
+output$slick_output <- slickR::renderSlickR({
+  imgs = paste0("slick_img/N",1:6,".png")
+  x = slickR::slickR(imgs, height = 600, width = "80%", slideType = 'img-lazy')  +
+        slickR::settings(arrows = TRUE, dots = TRUE, autoplay = TRUE, autoplaySpeed = 2500)
+  x
 })
 
-# output$Xenasummary <- plotly::renderPlotly({
-#   p <- dat_datasets %>%
-#     #  filter(XenaHostNames == "gdcHub") %>%
-#     dplyr::rename(
-#       Hub = XenaHostNames, Percent = Sample_percent,
-#       Cohort = XenaCohorts, DatasetCount = N
-#     ) %>%
-#     ggplot2::ggplot(ggplot2::aes(x = Hub, y = Percent, fill = Cohort, label = DatasetCount)) +
-#     ggplot2::geom_bar(stat = "identity", width = 0.8, color = "black") +
-#     ggplot2::coord_flip() +
-#     ggplot2::labs(y = "", x = "") +
-#     ggplot2::theme_bw(base_size = 15) + # 去除背景色
-#     ggplot2::theme(panel.grid = ggplot2::element_blank()) + # 去除网格线
-#     ggplot2::theme(panel.border = ggplot2::element_blank()) + # 去除外层边框
-#     ggplot2::theme(axis.line = ggplot2::element_line(colour = "black")) + # 沿坐标轴显示直线
-#     ggplot2::theme(
-#       axis.line.x = ggplot2::element_blank(),
-#       axis.ticks.x = ggplot2::element_blank(),
-#       axis.text.x = ggplot2::element_blank()
-#     ) + # 去除x轴
-#     ggplot2::guides(fill = F) +
-#     ggplot2::guides(color = F) +
-#     ggplot2::scale_fill_manual(values = mycolor)
-#
-#   plotly::ggplotly(p, tooltip = c("fill", "label")) %>% plotly::layout(showlegend = FALSE)
-# })
-# output$Xenasummary1 <- plotly::renderPlotly({
-#   p <- dat_samples %>%
-#     #  filter(XenaHostNames == "gdcHub") %>%
-#     dplyr::rename(
-#       Hub = XenaHostNames, Percent = SampleCount_percent,
-#       Cohort = XenaCohorts, SampleCount = SampleCount_sum
-#     ) %>%
-#     ggplot2::ggplot(ggplot2::aes(x = Hub, y = Percent, fill = Cohort, label = SampleCount)) +
-#     ggplot2::geom_bar(stat = "identity", width = 0.8, color = "black") +
-#     ggplot2::coord_flip() +
-#     ggplot2::labs(y = "", x = "") +
-#     ggplot2::theme_bw(base_size = 15) + # 去除背景色
-#     ggplot2::theme(panel.grid = ggplot2::element_blank()) + # 去除网格线
-#     ggplot2::theme(panel.border = ggplot2::element_blank()) + # 去除外层边框
-#     ggplot2::theme(axis.line = ggplot2::element_line(colour = "black")) + # 沿坐标轴显示直线
-#     ggplot2::theme(
-#       axis.line.x = ggplot2::element_blank(),
-#       axis.ticks.x = ggplot2::element_blank(),
-#       axis.text.x = ggplot2::element_blank()
-#     ) + # 去除x轴
-#     ggplot2::guides(fill = F) +
-#     ggplot2::guides(color = F) +
-#     ggplot2::scale_fill_manual(values = mycolor)
-#   plotly::ggplotly(p, tooltip = c("fill", "label")) %>% plotly::layout(showlegend = FALSE)
-# })
+observeEvent(input$link_to_q1, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA+GTEx: Molecular Profile Distribution (Tumor VS Normal)")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+
+observeEvent(input$link_to_q2, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA+GTEx: Molecular Profile Anatomy")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+observeEvent(input$link_to_q3, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Molecule-Molecule Correlation")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+observeEvent(input$link_to_q4, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Molecular Profile Cox Regression Analysis")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+observeEvent(input$link_to_q5, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Association Between Molecular Profile and Immune Signature")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+observeEvent(input$link_to_q6, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Association Between Molecular Profile and Tumor Immune Infiltration")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+observeEvent(input$link_to_q7, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Association Between Molecular Profile and TMB/Stemness/MSI (Radar Show)")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+observeEvent(input$link_to_q8, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Association Between Molecular Profile and Pathway Score")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+observeEvent(input$link_to_q9, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Association Between Molecular Profile and Gene Mutation")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+observeEvent(input$link_to_q10, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Molecular Profile Kaplan-Meier Analysis")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+observeEvent(input$link_to_q11, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Dimension Reduction Distribution")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+
+
+observeEvent(input$link_to_p1, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Comparison Analysis")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+observeEvent(input$link_to_p2, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Association Analysis")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})
+
+observeEvent(input$link_to_p3, {
+  updateNavbarPage(inputId = "navbar", 
+    selected = "TCGA: Survival Analysis")
+  shinyjs::runjs("window.scrollTo(0, 0)")
+})

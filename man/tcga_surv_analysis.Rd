@@ -9,10 +9,10 @@
 tcga_surv_get(
   item,
   TCGA_cohort = "LUAD",
-  profile = c("mRNA", "miRNA", "methylation", "transcript", "protein", "mutation",
-    "cnv"),
-  TCGA_cli_data = dplyr::full_join(load_data("tcga_clinical"), load_data("tcga_surv"),
-    by = "sample")
+  profile = c("mRNA", "miRNA", "methylation", "transcript", "protein", "mutation", "cnv"),
+  TCGA_cli_data = dplyr::full_join(load_data("tcga_clinical"), load_data("tcga_surv"), by
+    = "sample"),
+  opt_pancan = .opt_pancan
 )
 
 tcga_surv_plot(
@@ -22,8 +22,7 @@ tcga_surv_plot(
   cutoff_mode = c("Auto", "Custom"),
   cutpoint = c(50, 50),
   cnv_type = c("Duplicated", "Normal", "Deleted"),
-  profile = c("mRNA", "miRNA", "methylation", "transcript", "protein", "mutation",
-    "cnv"),
+  profile = c("mRNA", "miRNA", "methylation", "transcript", "protein", "mutation", "cnv"),
   palette = "aaas",
   ...
 )
@@ -37,6 +36,8 @@ tcga_surv_plot(
 
 \item{TCGA_cli_data}{a \code{data.frame} containing TCGA clinical data. Default use pre-compiled TCGA clinical data in
 this package.}
+
+\item{opt_pancan}{specify one dataset for some molercular profiles}
 
 \item{data}{a subset of result from \code{tcga_surv_get()}.}
 

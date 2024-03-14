@@ -1,3 +1,81 @@
+# UCSCXenaShiny 2.0.0
+
+See the [UCSCXenaShiny v2 Book](https://lishensuo.github.io/UCSCXenaShiny_Book/index.html) for a comprehensive guidance.
+
+## New Features
+
+### Datasets
+
+- `load_data("tcga_PW")`: ssGSEA scores of HALLMARK, KEGG, IOBR terms for TCGA samples.
+- `load_data("tcga_PW_meta")`: metadata annotation for HALLMARK, KEGG, IOBR terms.
+- `load_data("pcawg_TIL")`: PCAWG TIL data.
+- `load_data("pcawg_PW")`: ssGSEA scores of HALLMARK, KEGG, IOBR terms for PCAWG samples.
+- and more.
+
+### R Package Functions
+
+- `.opt_pancan` : Default setting for alternative TPC datasets.
+- `mol_quick_analysis()`: Quick molecule analysis and report generation based on TCGA dataset.
+- `query_tcga_group()`: Group TPC samples by build-in or custom phenotype and support filtering or merging operations.
+- `vis_dim_dist()`: Visualize the distribution difference of TCGA samples after dimension reduction analysis.
+- `vis_identifier_dim_dist()`: Visualize the distribution difference of samples after Molecule Identifier dimension reduction analysis.
+- `vis_toil_Mut()`: Visualize molecular profile difference between mutation and wild status of queried gene.
+- `vis_toil_Mut_cancer()`: Visualize molecular profile difference between mutation and wild status of queried gene in Single Cancer Type
+
+### Shiny application
+
+- Homepage
+  - Added slicker gallery to display page summary;
+  - Added report generation for TCGA pan-cancer exploration.
+  
+- General Dataset  Analysis
+
+  - Added one general dimension reduction analysis module.
+
+- Quick TPC Analysis
+
+  - Added one module for association analysis between molecule and pathway;
+  - Added one module for association analysis between molecule and mutation;
+  - Added one module for dimension reduction analysis.
+
+- Personalized Analysis
+
+  - Designed personalized TPC analysis pipelines for based on 3 methods and 3 modes.
+
+- Download
+
+  - Added two modules for exact subset of integrated TPC data and UCSCXena datasets.
+
+## Enhancements
+
+- Supported getting more flexible methylation value.
+
+```r
+UCSCXenaShiny::get_pancan_methylation_value(
+  "RCAN2",
+  rule_out = c("cg21115430", "cg19452802"), 
+  aggr = "Q75"
+)
+```
+
+- Supported installing the package from r-universe (<https://openbiox.r-universe.dev/UCSCXenaShiny>).
+
+- Supported alternative molecular profiling datasets for quick and personalized TPC analysis.
+
+## Bug Fixes
+
+- Merged data with unequal size in pan-cancer data query with a gene signature (#283), the fix also enhance the sample names match.
+
+Test code:
+
+```r
+vis_gene_tmb_cor("`ZFAT-AS1` + `SNORD116-1` + SPATA31D1", data_type = "methylation")
+```
+
+# UCSCXenaShiny 1.1.11
+
+- Fixed check warning in pan-cancer radar plot.
+
 # UCSCXenaShiny 1.1.10
 
 - Fixed check issue due to internet access (#253).

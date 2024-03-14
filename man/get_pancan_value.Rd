@@ -23,7 +23,7 @@
 \usage{
 get_ccle_cn_value(identifier)
 
-get_ccle_gene_value(identifier)
+get_ccle_gene_value(identifier, norm = c("rpkm", "nc"))
 
 get_ccle_protein_value(identifier)
 
@@ -34,20 +34,26 @@ get_pancan_value(
   subtype = NULL,
   dataset = NULL,
   host = available_hosts(),
-  samples = NULL
+  samples = NULL,
+  ...
 )
 
-get_pancan_gene_value(identifier)
+get_pancan_gene_value(identifier, norm = c("tpm", "fpkm", "nc"))
 
-get_pancan_transcript_value(identifier)
+get_pancan_transcript_value(identifier, norm = c("tpm", "fpkm", "isopct"))
 
 get_pancan_protein_value(identifier)
 
 get_pancan_mutation_status(identifier)
 
-get_pancan_cn_value(identifier, use_thresholded_data = TRUE)
+get_pancan_cn_value(identifier, gistic2 = TRUE, use_thresholded_data = FALSE)
 
-get_pancan_methylation_value(identifier, type = c("450K", "27K"))
+get_pancan_methylation_value(
+  identifier,
+  type = c("450K", "27K"),
+  rule_out = NULL,
+  aggr = c("NA", "mean", "Q0", "Q25", "Q50", "Q75", "Q100")
+)
 
 get_pancan_miRNA_value(identifier)
 
@@ -57,7 +63,7 @@ get_pcawg_fusion_value(identifier)
 
 get_pcawg_promoter_value(identifier, type = c("raw", "relative", "outlier"))
 
-get_pcawg_miRNA_value(identifier, norm_method = c("TMM", "UQ"))
+get_pcawg_miRNA_value(identifier, norm = c("TMM", "UQ"))
 
 get_pcawg_APOBEC_mutagenesis_value(
   identifier = c("tCa_MutLoad_MinEstimate", "APOBECtCa_enrich", "A3A_or_A3B",
@@ -72,6 +78,8 @@ get_pcawg_APOBEC_mutagenesis_value(
 \item{identifier}{a length-1 character representing a gene symbol, ensembl gene id, or probe id.
 Gene symbol is highly recommended.}
 
+\item{norm}{the normalization method.}
+
 \item{subtype}{a length-1 chracter representing a regular expression for matching
 \code{DataSubtype} column of \link[UCSCXenaTools:XenaData]{UCSCXenaTools::XenaData}.}
 
@@ -82,13 +90,22 @@ Gene symbol is highly recommended.}
 
 \item{samples}{a character vector representing samples want to be returned.}
 
-\item{use_thresholded_data}{if \code{TRUE} (default), use GISTIC2-thresholded value.}
+\item{...}{other parameters.}
+
+\item{gistic2}{if \code{TRUE} (default), use GISTIC2 data.}
+
+\item{use_thresholded_data}{if \code{TRUE}, use GISTIC2-thresholded value.}
 
 \item{type}{methylation type, one of "450K" and "27K".
 for function \code{get_pcawg_promoter_value}, it can be one of
 "raw", "relative", "outlier".}
 
-\item{norm_method}{the normalization method.}
+\item{rule_out}{methylation sites to rule out before analyzing.}
+
+\item{aggr}{apporaches to aggregate the methylation data, default is 'NA',
+in such case, a mean value is obtained for gene-level methylation.
+Allowed value is one of \code{c("NA", "mean", "Q0", "Q25", "Q50", "Q75", "Q100")}.
+Here, \code{Q50} is median.}
 }
 \value{
 a named vector or \code{list}.
@@ -98,41 +115,41 @@ Identifier includes gene/probe etc.
 }
 \section{Functions}{
 \itemize{
-\item \code{get_ccle_cn_value}: Fetch copy number value from CCLE dataset
+\item \code{get_ccle_cn_value()}: Fetch copy number value from CCLE dataset
 
-\item \code{get_ccle_gene_value}: Fetch gene expression value from CCLE dataset
+\item \code{get_ccle_gene_value()}: Fetch gene expression value from CCLE dataset
 
-\item \code{get_ccle_protein_value}: Fetch gene protein expression value from CCLE dataset
+\item \code{get_ccle_protein_value()}: Fetch gene protein expression value from CCLE dataset
 
-\item \code{get_ccle_mutation_status}: Fetch gene mutation info from CCLE dataset
+\item \code{get_ccle_mutation_status()}: Fetch gene mutation info from CCLE dataset
 
-\item \code{get_pancan_value}: Fetch identifier value from pan-cancer dataset
+\item \code{get_pancan_value()}: Fetch identifier value from pan-cancer dataset
 
-\item \code{get_pancan_gene_value}: Fetch gene expression value from pan-cancer dataset
+\item \code{get_pancan_gene_value()}: Fetch gene expression value from pan-cancer dataset
 
-\item \code{get_pancan_transcript_value}: Fetch gene transcript expression value from pan-cancer dataset
+\item \code{get_pancan_transcript_value()}: Fetch gene transcript expression value from pan-cancer dataset
 
-\item \code{get_pancan_protein_value}: Fetch protein expression value from pan-cancer dataset
+\item \code{get_pancan_protein_value()}: Fetch protein expression value from pan-cancer dataset
 
-\item \code{get_pancan_mutation_status}: Fetch mutation status value from pan-cancer dataset
+\item \code{get_pancan_mutation_status()}: Fetch mutation status value from pan-cancer dataset
 
-\item \code{get_pancan_cn_value}: Fetch gene copy number value from pan-cancer dataset processed by GISTIC 2.0
+\item \code{get_pancan_cn_value()}: Fetch gene copy number value from pan-cancer dataset processed by GISTIC 2.0
 
-\item \code{get_pancan_methylation_value}: Fetch gene expression value from CCLE dataset
+\item \code{get_pancan_methylation_value()}: Fetch gene expression value from CCLE dataset
 
-\item \code{get_pancan_miRNA_value}: Fetch miRNA expression value from pan-cancer dataset
+\item \code{get_pancan_miRNA_value()}: Fetch miRNA expression value from pan-cancer dataset
 
-\item \code{get_pcawg_gene_value}: Fetch specimen-level gene expression value from PCAWG cohort
+\item \code{get_pcawg_gene_value()}: Fetch specimen-level gene expression value from PCAWG cohort
 
-\item \code{get_pcawg_fusion_value}: Fetch specimen-level gene fusion value from PCAWG cohort
+\item \code{get_pcawg_fusion_value()}: Fetch specimen-level gene fusion value from PCAWG cohort
 
-\item \code{get_pcawg_promoter_value}: Fetch specimen-level gene promoter activity value from PCAWG cohort
+\item \code{get_pcawg_promoter_value()}: Fetch specimen-level gene promoter activity value from PCAWG cohort
 
-\item \code{get_pcawg_miRNA_value}: Fetch specimen-level miRNA value from PCAWG cohort
+\item \code{get_pcawg_miRNA_value()}: Fetch specimen-level miRNA value from PCAWG cohort
 
-\item \code{get_pcawg_APOBEC_mutagenesis_value}: Fetch specimen-level gene fusion value from PCAWG cohort
+\item \code{get_pcawg_APOBEC_mutagenesis_value()}: Fetch specimen-level gene fusion value from PCAWG cohort
+
 }}
-
 \examples{
 \dontrun{
 # Fetch TP53 expression value from pan-cancer dataset
